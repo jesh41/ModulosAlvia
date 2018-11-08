@@ -12,7 +12,17 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    You are logged in!
+                        <form action="">
+                            <div class="form-group">
+                                <label for="thought">Ahora estoy pensando en:</label>
+                                <input type="text" class="form-control" name="thought">
+
+                            </div>
+                            <button type="submit">
+                                Enviar pensamiento
+                            </button>
+                        </form>
+
                 </div>
             </div>
         </div>
