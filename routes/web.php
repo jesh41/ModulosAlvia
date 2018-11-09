@@ -16,6 +16,9 @@
 
 Auth::routes();
 
+Route::get('/colores', 'Catalogos\ColoresController@index');
+Route::post('/colores/registrar', 'Catalogos\ColoresController@store');
+Route::put('/colores/actualizar', 'Catalogos\ColoresController@update');
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -27,6 +30,11 @@ Route::group(['middleware' => ['auth']], function() {
         return view('home');
 
     });
+
+
+
+
+
 });
 
 

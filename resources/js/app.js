@@ -18,6 +18,7 @@ window.Vue = require('vue');
 
 
 Vue.component('formrol-componente',require('./components/FormRolesComponent.vue'));
+Vue.component('formcolor-componente',require('./components/Colorescomponent.vue'));
 
 const app = new Vue({
     el: '#app',

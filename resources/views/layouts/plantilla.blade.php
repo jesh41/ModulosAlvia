@@ -12,7 +12,7 @@
     <title>Sistema Ventas - IncanatoIT</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Icons -->
-    <link href="css/plantilla.css" rel="stylesheet">
+    <link href="{{ asset('css/plantilla.css') }}" rel="stylesheet">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -92,8 +92,8 @@
     <span class="ml-auto">Desarrollado por <a href="http://www.incanatoit.com/">IncanatoIT</a></span>
 </footer>
 
-<script src="js/app.js"></script>
-<script src="js/plantilla.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/plantilla.js') }}"></script>
 
 
 </body>

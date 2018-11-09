@@ -20,7 +20,7 @@
     </template>
 
     <template v-if="menu==4">
-        <h1>Contenido del menú 4</h1>
+        <formcolor-componente></formcolor-componente>
     </template>
 
     <template v-if="menu==5">
