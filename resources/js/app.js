@@ -5,7 +5,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
+//require('bootstrap-sass');
 
 window.Vue = require('vue');
 
@@ -16,9 +17,12 @@ window.Vue = require('vue');
  */
 
 
-Vue.component('formrol-component',require('./components/FormRolesComponent.vue'));
+Vue.component('formrol-componente',require('./components/FormRolesComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data :{
+        menu : 0
+    }
 
 });
