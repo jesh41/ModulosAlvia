@@ -10,7 +10,7 @@
             <!-- Ejemplo de tabla Listado -->
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Categorías
+                    <i class="fa fa-align-justify"></i> Usuarios
                     <button type="button" @click="abrirModal('colores','registrar')" class="btn btn-secondary">
                         <i class="icon-plus"></i>&nbsp;Nuevo
                     </button>
@@ -32,26 +32,29 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Descripción</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>rol</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="colores in arrayColor" :key="colores.id">
-                            <td v-text="colores.id"></td>
-                            <td v-text="colores.descripcion"></td>
-
+                        <tr v-for="user in arrayColor" :key="user.id">
+                            <td v-text="user.id"></td>
+                            <td v-text="user.name"></td>
+                            <td v-text="user.email"></td>
+                            <td v-text=""></td>
                             <td>
                                 <button type="button" @click="abrirModal('colores','actualizar',colores)" class="btn btn-warning btn-sm">
                                     <i class="icon-pencil"></i>
                                 </button> &nbsp;
-                                <button type="button" class="btn btn-danger btn-sm" @click="eliminarcolor(colores.id)" >
+                                <button type="button" class="btn btn-danger btn-sm" @click="desactivar(user.id)" >
                                     <i class="icon-trash"></i>
                                 </button>
                             </td>
 
 
-                            
+
                         </tr>
                         </tbody>
                     </table>
@@ -163,16 +166,16 @@
             }
         },
         methods : {
-            listarColor (){
+            listarUser (){
                 let me=this;
-                axios.get('/colores').then(function (response) {
+                axios.get('/user').then(function (response) {
                     me.arrayColor = response.data;
                 })
                     .catch(function (error) {
                         console.log(error);
                     });
             },
-            registrarColor(){
+            registrarUser(){
                 if (this.validarColor()){
                     return;
                 }
@@ -187,7 +190,7 @@
                     console.log(error);
                 });
             },
-            eliminarcolor(id){
+            desactivarUser(id){
                 swal({
                     title: 'Esta seguro de eliminar?',
                     type: 'warning',
@@ -207,7 +210,7 @@
                         axios.put('',{
                             'id': id
                         }).then(function (response) {
-                            me.listarColor();
+                            me.listarUser();
                             swal(
                                 'Eliminado!',
                                 'El registro ha sido Eliminado con éxito.',
@@ -226,7 +229,7 @@
                     }
                 })
             },
-            actualizarColor(){
+            actualizarUser(){
                 if (this.validarColor()){
                     return;
                 }
@@ -241,7 +244,7 @@
                     console.log(error);
                 });
             },
-            validarColor(){
+            validarUser(){
                 this.errorColor=0;
                 this.errorMostrarMsjColor =[];
                 if (!this.descripcion) this.errorMostrarMsjColor.push("El nombre del color no puede estar vacío.");
@@ -282,7 +285,7 @@
             }
         },
         mounted() {
-            this.listarColor();
+            this.listarUser();
         }
     }
 </script>

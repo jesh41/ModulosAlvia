@@ -54,4 +54,10 @@
     <template v-if="menu==12">
         <h1>Contenido del menú 12</h1>
     </template>
+
+    <template v-if="menu==17">
+        <formusuario-componente></formusuario-componente>
+    </template>
+
+
 @endsection

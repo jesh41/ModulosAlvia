@@ -16,7 +16,7 @@ class CreateTableCatcolores extends Migration
         Schema::create('catcolores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion');
-            $table->timestamps();
+            $table->timestamps(4);
         });
     }
 

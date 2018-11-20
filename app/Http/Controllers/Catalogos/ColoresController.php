@@ -13,6 +13,7 @@ class ColoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
        // if (!$request->ajax()) return redirect('/');
@@ -73,7 +74,7 @@ class ColoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $color = Colores::findOrFail($request->id);
         $color->descripcion = $request->descripcion;

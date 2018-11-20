@@ -20,10 +20,13 @@ Route::get('/colores', 'Catalogos\ColoresController@index');
 Route::post('/colores/registrar', 'Catalogos\ColoresController@store');
 Route::put('/colores/actualizar', 'Catalogos\ColoresController@update');
 
+
 Route::group(['middleware' => ['auth']], function() {
 
-    Route::resource('roles','RolesController');
-    Route::resource('users','UserController');
+    //Route::resource('roles','RolesController');
+   // Route::resource('users','UserController');
+    Route::get('/user', 'UserController@index');
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', function () {
