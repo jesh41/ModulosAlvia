@@ -21,11 +21,19 @@ Route::post('/colores/registrar', 'Catalogos\ColoresController@store');
 Route::put('/colores/actualizar', 'Catalogos\ColoresController@update');
 
 
+
 Route::group(['middleware' => ['auth']], function() {
 
-    //Route::resource('roles','RolesController');
-   // Route::resource('users','UserController');
+   // Route::resource('roles','RolesController');
+    //Route::resource('users','UserController');
+
     Route::get('/user', 'UserController@index');
+    Route::post('/user/registrar', 'UserController@store');
+    Route::put('/user/actualizar', 'UserController@update');
+    Route::put('/user/desactivar', 'UserController@desactivar');
+    Route::put('/user/activar', 'UserController@activar');
+
+
 
     Route::get('/home', 'HomeController@index')->name('home');
 

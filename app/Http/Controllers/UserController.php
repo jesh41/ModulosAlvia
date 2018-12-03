@@ -18,10 +18,12 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        //$data = User::orderBy('id','DESC')->paginate(5);
-        //return view('users.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
-        $users = User::orderBy('id','DESC');
-        return $users;
+        if (!$request->ajax()) return redirect('/');
+
+        $user = User::with('roles')->get();
+        $rolesc = Role::pluck('name','id')->toarray();
+        //return $user;
+        return [$user,$rolesc];
     }
 
     /**
@@ -31,9 +33,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-
-        return view('users.create',compact('roles'));
+        if (!$request->ajax()) return redirect('/');
+    //    $roles = Role::pluck('name','name')->all();
+      //  return view('users.create',compact('roles'));
     }
 
     /**
@@ -44,30 +46,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->ajax()) return redirect('/');
         $this->validate($request, [
-
             'name' => 'required',
-
-            'email' => 'required|email|unique:users,email',
-
-            'password' => 'required|same:confirm-password',
-
-            'roles' => 'required'
+            'email' => 'required|email|unique:users,email'///,
+          //  'password' => 'required|same:confirm-password',
+        //    'roles' => 'required'
 
         ]);
 
 
         $input = $request->all();
-
         $input['password'] = Hash::make($input['password']);
-
-
         $user = User::create($input);
+        $user->assignRole($request->input('rol'));
 
-        $user->assignRole($request->input('roles'));
 
-
-        return redirect()->route('users.index')->with('success','User created successfully');
+       // return redirect()->route('users.index')->with('success','User created successfully');
     }
 
     /**
@@ -78,6 +73,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (!$request->ajax()) return redirect('/');
         $user = User::find($id);
 
         return view('users.show',compact('user'));
@@ -91,6 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (!$request->ajax()) return redirect('/');
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
@@ -106,6 +103,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!$request->ajax()) return redirect('/');
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -141,7 +139,26 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect()->route('users.index')->with('success','User deleted successfully');
+     //   if (!$request->ajax()) return redirect('/');
+      //  User::find($id)->delete();
+       // return redirect()->route('users.index')->with('success','User deleted successfully');
     }
+
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $user = User::findOrFail($request->id);
+        $user->activo = '0';
+        $user->save();
+    }
+
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $user = User::findOrFail($request->id);
+        $user->activo = '1';
+        $user->save();
+    }
+
 }

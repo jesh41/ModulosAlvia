@@ -4,7 +4,7 @@
 
 
     <template v-if="menu==0">
-        <formrol-componente></formrol-componente>
+        <formusuario-componente></formusuario-componente><!--  <formrol-componente></formrol-componente>-->
     </template>
 
     <template v-if="menu==1">
