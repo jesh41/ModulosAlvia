@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 use DB;
 use Hash;
 class UserController extends Controller
@@ -20,10 +21,20 @@ class UserController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $user = User::with('roles')->get();
+        $user = User::with('roles:id,name')->get();
         $rolesc = Role::pluck('name','id')->toarray();
+
+//        $user = User::with('roles')->get();
+
+       //$user=User::all('id','name','email');
+        //$user=User::with('roles')->select('id','name','email');
+        //$rolesc=Role::all();
+        //$rolesc = Role::all();
         //return $user;
+       // return ['user' => $user];
+       //
         return [$user,$rolesc];
+
     }
 
     /**
@@ -49,9 +60,9 @@ class UserController extends Controller
         if (!$request->ajax()) return redirect('/');
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email'///,
+            'email' => 'required|email|unique:users,email',///,
           //  'password' => 'required|same:confirm-password',
-        //    'roles' => 'required'
+        'roles' => 'required'
 
         ]);
 
@@ -101,34 +112,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
-
+       // $this->validate($request, [
+       //     'name' => 'required',
+      //      'email' => 'required,',
+       //    // 'password' => 'same:confirm-password',
+       //     'roles' => 'required'
+      //  ]);
 
         $input = $request->all();
-
         if(!empty($input['password'])){
-
             $input['password'] = Hash::make($input['password']);
-
         }else{
-
             $input = array_except($input,array('password'));
-
         }
 
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user = User::find($input['id']);
+        $user->name=$input['name'];
+        $user->save();
+
+        DB::table('model_has_roles')->where('model_id',$input['id'])->delete();
+        //$user->removeRole('writer');
         $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','User updated successfully');
+
     }
 
     /**

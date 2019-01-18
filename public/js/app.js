@@ -32785,6 +32785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -32794,6 +32795,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             email: '',
             arrayData: [],
             roles: 0,
+            activo: 0,
             modal: 0,
             password: '',
             tituloModal: '',
@@ -32820,7 +32822,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.validarUser()) {
                 return;
             }
-
             var me = this;
             axios.post('/user/registrar', {
                 'name': this.nombre,
@@ -32904,7 +32905,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             var me = this;
             axios.put('/user/actualizar', {
-                'descripcion': this.descripcion,
+                'name': this.nombre,
+                'email': this.email,
+                'password': this.password,
+                'roles': this.roles,
                 'id': this.id
             }).then(function (response) {
                 me.cerrarModal();
@@ -32923,12 +32927,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
             if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
             if (!this.password) this.errorMostrarMsjPass.push("El pass no puede estar vacío.");
+
+            if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
+
+            if (this.errorMostrarMsjPass.length) this.errorPass = 1;
+
             if (this.errorMostrarMsjEmail.length) this.errorEmail = 1;
             return this.errorEmail;
-            if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
-            return this.errorNombre;
-            if (this.errorMostrarMsjPass.length) this.errorPass = 1;
-            return this.errorPass;
         },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
@@ -32937,6 +32942,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.email = '';
             this.password = '';
             this.roles = 0;
+            this.errorNombre = 0;
+            this.errorEmail = 0;
+            this.errorPass = 0;
+            this.errorMostrarMsjNombre = [];
+            this.errorMostrarMsjEmail = [];
+            this.errorMostrarMsjPass = [];
         },
         abrirModal: function abrirModal(modelo, accion) {
             var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -33021,83 +33032,99 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.arrayData[0], function(user) {
-                  return _c("tr", { key: user.id }, [
-                    _c("td", { domProps: { textContent: _vm._s(user.id) } }),
-                    _vm._v(" "),
-                    _c("td", { domProps: { textContent: _vm._s(user.name) } }),
-                    _vm._v(" "),
-                    _c("td", { domProps: { textContent: _vm._s(user.email) } }),
-                    _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(user.roles[0].name) }
-                    }),
-                    _vm._v(" "),
-                    _c("td", [
-                      user.activo == "1"
-                        ? _c("div", [
-                            _c("span", { staticClass: "badge badge-success" }, [
-                              _vm._v("Activo")
-                            ])
-                          ])
-                        : _c("div", [
-                            _c("span", { staticClass: "badge badge-danger" }, [
-                              _vm._v("Desactivado")
-                            ])
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.abrirModal("user", "actualizar", user)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icon-pencil" })]
-                        ),
-                        _vm._v("  \n                            "),
+                  return _c(
+                    "tr",
+                    { key: user.id },
+                    [
+                      _c("td", { domProps: { textContent: _vm._s(user.id) } }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(user.name) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(user.email) }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(user.roles, function(rol) {
+                        return _c("td", {
+                          key: rol.id,
+                          domProps: { textContent: _vm._s(rol.name) }
+                        })
+                      }),
+                      _vm._v(" "),
+                      _c("td", [
                         user.activo == "1"
-                          ? [
+                          ? _c("div", [
                               _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.desactivarUsuario(user.id)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "icon-trash" })]
+                                "span",
+                                { staticClass: "badge badge-success" },
+                                [_vm._v("Activo")]
                               )
-                            ]
-                          : [
+                            ])
+                          : _c("div", [
                               _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-success btn-sm",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.activarUsuario(user.id)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "icon-check" })]
+                                "span",
+                                { staticClass: "badge badge-danger" },
+                                [_vm._v("Desactivado")]
                               )
-                            ]
-                      ],
-                      2
-                    )
-                  ])
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.abrirModal("user", "actualizar", user)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "icon-pencil" })]
+                          ),
+                          _vm._v("  \n                            "),
+                          user.activo == "1"
+                            ? [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger btn-sm",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.desactivarUsuario(user.id)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "icon-trash" })]
+                                )
+                              ]
+                            : [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-success btn-sm",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.activarUsuario(user.id)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "icon-check" })]
+                                )
+                              ]
+                        ],
+                        2
+                      )
+                    ],
+                    2
+                  )
                 })
               )
             ]

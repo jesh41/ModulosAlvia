@@ -45,8 +45,8 @@
                             <td v-text="user.id"></td>
                             <td v-text="user.name"></td>
                             <td v-text="user.email"></td>
-                            <td v-text="user.roles[0].name"></td>
-                          <!--  <td v-for="rol in user.roles" :key="rol.id" v-text="rol.name"  ></td>-->
+                           <!-- <td v-text="user.roles[0].name"></td>-->
+                          <td v-for="rol in user.roles" :key="rol.id" v-text="rol.name"  ></td>
                             <td>
                                 <div v-if="user.activo=='1'">
                                     <span class="badge badge-success">Activo</span>
@@ -167,6 +167,7 @@
                                     <select  v-model="roles" >
                                         <option value="0">Seleccione un rol</option>
                                         <option v-for="(name, key) in arrayData[1]" :key="key" :value="key" v-text="name"></option>
+                                     <!--   <option v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>-->
                                       <!--  <option v-for='(name, key) in arrayData[1]' :value='key' v-text="name" ></option>-->
                                     </select>
                                 </div>
@@ -222,6 +223,7 @@
                 email : '',
                 arrayData : [],
                 roles : 0,
+                activo:0,
                 modal : 0,
                 password:'',
                 tituloModal : '',
@@ -248,7 +250,6 @@
                 if (this.validarUser()){
                     return;
                 }
-
                 let me = this;
                 axios.post('/user/registrar',{
                     'name': this.nombre,
@@ -346,8 +347,11 @@
                 }
                 let me = this;
                 axios.put('/user/actualizar',{
-                    'descripcion': this.descripcion,
-                    'id': this.id
+                    'name': this.nombre,
+                    'email': this.email,
+                    'password': this.password,
+                    'roles': this.roles,
+                    'id':this.id
                 }).then(function (response) {
                     me.cerrarModal();
                     me.listarUser();
@@ -365,12 +369,13 @@
                 if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
                 if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
                 if (!this.password) this.errorMostrarMsjPass.push("El pass no puede estar vacío.");
+
+                if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
+
+                if (this.errorMostrarMsjPass.length) this.errorPass = 1;
+
                 if (this.errorMostrarMsjEmail.length) this.errorEmail = 1;
                 return this.errorEmail;
-                if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
-                return this.errorNombre;
-                if (this.errorMostrarMsjPass.length) this.errorPass = 1;
-                return this.errorPass;
             },
             cerrarModal(){
                 this.modal=0;
@@ -379,6 +384,12 @@
                 this.email='';
                 this.password='';
                 this.roles = 0;
+                this.errorNombre=0;
+                this.errorEmail=0;
+                this.errorPass=0;
+                this.errorMostrarMsjNombre =[];
+                this.errorMostrarMsjEmail =[];
+                this.errorMostrarMsjPass =[];
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
