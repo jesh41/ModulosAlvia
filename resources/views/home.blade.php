@@ -8,56 +8,29 @@
     </template>
 
     <template v-if="menu==1">
-        <h1>Contenido del menú 1</h1>
+        <h1>DDelivery</h1>
     </template>
 
     <template v-if="menu==2">
-        <h1>Contenido del menú 2</h1>
+        <formusuario-componente></formusuario-componente>
     </template>
 
     <template v-if="menu==3">
-        <h1>Contenido del menú 3</h1>
+        <formrol-componente></formrol-componente>
     </template>
 
     <template v-if="menu==4">
-        <formcolor-componente></formcolor-componente>
+        <h1>Reportes 4</h1>
     </template>
 
     <template v-if="menu==5">
-        <h1>Contenido del menú 5</h1>
+        <h1>Ayuda 5</h1>
     </template>
 
     <template v-if="menu==6">
-        <h1>Contenido del menú 6</h1>
+        <h1>Acerca de 6</h1>
     </template>
 
-    <template v-if="menu==7">
-        <h1>Contenido del menú 7</h1>
-    </template>
-
-    <template v-if="menu==8">
-        <h1>Contenido del menú 8</h1>
-    </template>
-
-    <template v-if="menu==9">
-        <h1>Contenido del menú 9</h1>
-    </template>
-
-    <template v-if="menu==10">
-        <h1>Contenido del menú 10</h1>
-    </template>
-
-    <template v-if="menu==11">
-        <h1>Contenido del menú 11</h1>
-    </template>
-
-    <template v-if="menu==12">
-        <h1>Contenido del menú 12</h1>
-    </template>
-
-    <template v-if="menu==17">
-        <formusuario-componente></formusuario-componente>
-    </template>
 
 
 @endsection
