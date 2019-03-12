@@ -34,7 +34,7 @@
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th>rol</th>
+                            <th>Rol</th>
                             <th>Estado</th>
                             <th>Acciones</th>
 
@@ -342,7 +342,7 @@
                 })
             },
             actualizarUser(){
-                if (this.validarUser()){
+                if (this.validarUserUpdate()){
                     return;
                 }
                 let me = this;
@@ -355,6 +355,11 @@
                 }).then(function (response) {
                     me.cerrarModal();
                     me.listarUser();
+                    swal(
+                        'Rol!',
+                        'El cambio de rol ha sido un éxito.',
+                        'success'
+                    )
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -369,6 +374,23 @@
                 if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
                 if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
                 if (!this.password) this.errorMostrarMsjPass.push("El pass no puede estar vacío.");
+
+                if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
+
+                if (this.errorMostrarMsjPass.length) this.errorPass = 1;
+
+                if (this.errorMostrarMsjEmail.length) this.errorEmail = 1;
+                return this.errorEmail;
+            },validarUserUpdate(){
+                this.errorNombre=0;
+                this.errorEmail=0;
+
+                this.errorMostrarMsjNombre =[];
+                this.errorMostrarMsjEmail =[];
+                this.errorMostrarMsjPass =[];
+                if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
+                if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
+
 
                 if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
 

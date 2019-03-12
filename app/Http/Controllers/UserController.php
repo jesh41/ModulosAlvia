@@ -86,7 +86,6 @@ class UserController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         $user = User::find($id);
-
         return view('users.show',compact('user'));
     }
 

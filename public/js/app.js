@@ -31115,7 +31115,7 @@ var staticRenderFns = [
                     _vm._v(" "),
                     _c("th", [_vm._v("Nombre")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Descripción")]),
+                    _c("th", [_vm._v("Rol")]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Estado")])
                   ])
@@ -32900,7 +32900,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         actualizarUser: function actualizarUser() {
-            if (this.validarUser()) {
+            if (this.validarUserUpdate()) {
                 return;
             }
             var me = this;
@@ -32913,6 +32913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarUser();
+                swal('Rol!', 'El cambio de rol ha sido un éxito.', 'success');
             }).catch(function (error) {
                 console.log(error);
             });
@@ -32927,6 +32928,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
             if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
             if (!this.password) this.errorMostrarMsjPass.push("El pass no puede estar vacío.");
+
+            if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
+
+            if (this.errorMostrarMsjPass.length) this.errorPass = 1;
+
+            if (this.errorMostrarMsjEmail.length) this.errorEmail = 1;
+            return this.errorEmail;
+        },
+        validarUserUpdate: function validarUserUpdate() {
+            this.errorNombre = 0;
+            this.errorEmail = 0;
+
+            this.errorMostrarMsjNombre = [];
+            this.errorMostrarMsjEmail = [];
+            this.errorMostrarMsjPass = [];
+            if (!this.nombre) this.errorMostrarMsjNombre.push("El nombre no puede estar vacío.");
+            if (!this.email) this.errorMostrarMsjEmail.push("El email no puede estar vacío.");
 
             if (this.errorMostrarMsjNombre.length) this.errorNombre = 1;
 
@@ -33546,7 +33564,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
         _vm._v(" "),
-        _c("th", [_vm._v("rol")]),
+        _c("th", [_vm._v("Rol")]),
         _vm._v(" "),
         _c("th", [_vm._v("Estado")]),
         _vm._v(" "),
