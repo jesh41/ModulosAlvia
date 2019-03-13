@@ -13,7 +13,7 @@
     </template>
 
     <template v-if="menu==3">
-        <formrol-componente></formrol-componente>
+        <cliente></cliente>
     </template>
 
     <template v-if="menu==4">

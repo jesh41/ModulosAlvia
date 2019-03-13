@@ -28,23 +28,26 @@
                             </div>
                         </div>
                     </div>
+
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
                         <tr>
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th>Rol</th>
+                            <!--<th>Rol</th>-->
                             <th>Estado</th>
                             <th>Acciones</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="user in arrayData[0]" :key="user.id">
+                        <!--<tr v-for="user in arrayData[0]" :key="user.id">-->
+                        <tr v-for="user in arrayData" :key="user.id">
                             <td v-text="user.id"></td>
                             <td v-text="user.name"></td>
                             <td v-text="user.email"></td>
+
                            <!-- <td v-text="user.roles[0].name"></td>-->
                           <td v-for="rol in user.roles" :key="rol.id" v-text="rol.name"  ></td>
                             <td>
@@ -71,34 +74,21 @@
                                         <i class="icon-check"></i>
                                     </button>
                                 </template>
-
-
                             </td>
-
-
-
                         </tr>
                         </tbody>
                     </table>
+
                     <nav>
                         <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#">Ant</a>
+                            <li class="page-item" v-if="pagination.current_page > 1">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1)">Ant</a>
                             </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
+                            <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(page)" v-text="page"></a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">4</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Sig</a>
+                            <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1)">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -233,14 +223,55 @@
                 errorEmail : 0,
                 errorMostrarMsjEmail : [],
                 errorPass : 0,
-                errorMostrarMsjPass : []
+                errorMostrarMsjPass : [],
+                pagination: {
+                    'total':0,
+                    'current_page':0,
+                    'per_page':0,
+                    'last_page':0,
+                    'from':0,
+                    'to':0,
+                },
+                offset:3
+            }
+        },
+        computed:{
+          isActived:function () {
+              return this.pagination.current_page;
+          } ,
+            pagesNumber: function () {
+              if(!this.pagination.to){
+                  return [];
+              }
+                  var from=this.pagination.current_page-this.offset;
+                  if(from<1){
+                      from =1;
+                  }
+                  var to= from +(this.offset*2);
+                  if (to>=this.pagination.last_page){
+                      to=this.pagination.last_page;
+                  }
+                  var pagesArray=[];
+                  while(from<=to){
+                      pagesArray.push(from);
+                      from++;
+                  }
+                  return pagesArray;
             }
         },
         methods : {
-            listarUser (){
+            cambiarPagina(page){
+                let me= this;
+                me.pagination.current_page=page;
+                me.listarUser(page);
+            },
+            listarUser (page){
                 let me=this;
-                axios.get('/user').then(function (response) {
-                    me.arrayData = response.data;
+                var url='/user?page='+page
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayData = respuesta.user.data;
+                    me.pagination=respuesta.pagination;
                 })
                     .catch(function (error) {
                         console.log(error);
@@ -446,6 +477,8 @@
         mounted() {
             this.listarUser();
         }
+
+
     }
 </script>
 <style>

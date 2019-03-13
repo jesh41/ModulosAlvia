@@ -20,6 +20,7 @@ window.Vue = require('vue');
 Vue.component('formrol-componente',require('./components/FormRolesComponent.vue'));
 Vue.component('formcolor-componente',require('./components/Colorescomponent.vue'));
 Vue.component('formusuario-componente',require('./components/usuarioscomponent'));
+Vue.component('cliente',require('./components/Clientescomponent'));
 
 const app = new Vue({
     el: '#app',
@@ -28,3 +29,5 @@ const app = new Vue({
     }
 
 });
+
+

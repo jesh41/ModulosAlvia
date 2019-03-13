@@ -26,16 +26,25 @@ Route::group(['middleware' => ['auth']], function() {
 
    // Route::resource('roles','RolesController');
     //Route::resource('users','UserController');
-
+    //rutas usuario
     Route::get('/user', 'UserController@index');
     Route::post('/user/registrar', 'UserController@store');
     Route::put('/user/actualizar', 'UserController@update');
     Route::put('/user/desactivar', 'UserController@desactivar');
     Route::put('/user/activar', 'UserController@activar');
-
+    //rutas cliente
+    Route::get('/cliente', 'ClienteController@index');
+    Route::post('/cliente/registrar', 'ClienteController@store');
+    Route::put('/cliente/actualizar', 'ClienteController@update');
+    ///Proveedores
+    Route::get('/proveedor', 'ProveedorController@index');
+    Route::post('/proveedor/registrar', 'ProveedorController@store');
+    Route::put('/proveedor/actualizar', 'ProveedorController@update');
 
 
     Route::get('/home', 'HomeController@index')->name('home');
+
+
 
     Route::get('/', function () {
         return view('home');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+//use Illuminate\Support\Facades\DB;
 use DB;
 use Hash;
 class UserController extends Controller
@@ -20,12 +21,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
+      $user = User::paginate(2);
 
-        $user = User::with('roles:id,name')->get();
-        $rolesc = Role::pluck('name','id')->toarray();
-
-//        $user = User::with('roles')->get();
-
+        //$user = User::with('roles:id,name')::paginate(2)->get();
+       //$rolesc = Role::pluck('name','id')->toarray();
+        // $user = User::with('roles')->get();
        //$user=User::all('id','name','email');
         //$user=User::with('roles')->select('id','name','email');
         //$rolesc=Role::all();
@@ -33,8 +33,19 @@ class UserController extends Controller
         //return $user;
        // return ['user' => $user];
        //
-        return [$user,$rolesc];
-
+        return [
+            'pagination'=>[
+                'total'        => $user->total(),
+                'current_page' => $user->currentPage(),
+                'per_page'     => $user->perPage(),
+                'last_page'    => $user->lastPage(),
+                'from'         => $user->firstItem(),
+                'to'           => $user->lastItem(),
+                            ],
+                  'user'=>$user,
+                // 'rolesc'=>$rolesc
+                ];
+       // return [$user,$rolesc];
     }
 
     /**
