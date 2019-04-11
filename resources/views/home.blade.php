@@ -17,10 +17,10 @@
     </template>
 
     <template v-if="menu==4">
-        <h1>Reportes 4</h1>
+        <proveedor></proveedor>
     </template>
     <template v-if="menu==5">
-        <h1>Ayuda 5</h1>
+        <rol></rol>
     </template>
     <template v-if="menu==6">
         <h1>Acerca de 6</h1>

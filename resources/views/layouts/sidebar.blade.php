@@ -22,18 +22,21 @@
                         <a class="nav-link" href="#"><i class="icon-user"></i> Clientes</a>
                     </li>
                     <li @click="menu=4" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-user-following"></i> Roles</a>
+                        <a class="nav-link" href="#"><i class="icon-user-following"></i> Proveedores</a>
+                    </li>
+                    <li @click="menu=5" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-user-following"></i>Roles</a>
                     </li>
                 </ul>
             </li>
-            <li @click="menu=5" class="nav-item">
+            <li @click="menu=10" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte</a>
             </li>
 
-            <li @click="menu=6" class="nav-item">
+            <li @click="menu=11" class="nav-item">
                 <a class="nav-link" href="#"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
             </li>
-            <li @click="menu=6" class="nav-item">
+            <li @click="menu=12" class="nav-item">
                 <a class="nav-link" href="#"><i class="icon-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
             </li>
         </ul>

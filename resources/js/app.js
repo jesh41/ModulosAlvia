@@ -19,8 +19,10 @@ window.Vue = require('vue');
 
 Vue.component('formrol-componente',require('./components/FormRolesComponent.vue'));
 Vue.component('formcolor-componente',require('./components/Colorescomponent.vue'));
-Vue.component('formusuario-componente',require('./components/usuarioscomponent'));
-Vue.component('cliente',require('./components/Clientescomponent'));
+Vue.component('formusuario-componente',require('./components/usuarioscomponent.vue'));
+Vue.component('cliente',require('./components/Clientes.vue'));
+Vue.component('proveedor',require('./components/Proveedor.vue'));
+Vue.component('rol',require('./components/Rol.vue'));
 
 const app = new Vue({
     el: '#app',

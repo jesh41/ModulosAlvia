@@ -41,6 +41,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/proveedor/registrar', 'ProveedorController@store');
     Route::put('/proveedor/actualizar', 'ProveedorController@update');
 
+    //rol
+    Route::get('/rol', 'RolController@index');
+    Route::get('/rol/selectRol', 'RolController@selectRol');
+
 
     Route::get('/home', 'HomeController@index')->name('home');
 
