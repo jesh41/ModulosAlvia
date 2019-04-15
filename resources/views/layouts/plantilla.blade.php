@@ -73,15 +73,29 @@
     </header>
 
     <div class="app-body">
+    @if(Auth::check())
+        @if (Auth::user()->idrol == 1)
+            @include('plantilla.sidebaradministrador')
+        @elseif (Auth::user()->idrol == 2)
+            @include('plantilla.sidebarvendedor')
+        @elseif (Auth::user()->idrol == 3)
+            @include('plantilla.sidebarcajero')
+        @elseif (Auth::user()->idrol == 4)
+            @include('plantilla.sidebarcoordinador')
+        @else
 
-    @include('layouts.sidebar')
+        @endif
+
+    @endif
+
     <!-- Contenido Principal -->
     @yield('contenido')
     <!-- /Fin del contenido principal -->
+
     </div>
 </div>
 <footer class="app-footer">
-    <span><a href="http://www.incanatoit.com/">IncanatoIT</a> &copy; 2017</span>
+    <span><a href="http://www.incanatoit.com/">IncanatoIT</a> &copy; 2019</span>
     <span class="ml-auto">Desarrollado por <a href="http://www.incanatoit.com/">IncanatoIT</a></span>
 </footer>
 

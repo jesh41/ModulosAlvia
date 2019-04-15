@@ -18,7 +18,6 @@ window.Vue = require('vue');
 
 
 Vue.component('formrol-componente',require('./components/FormRolesComponent.vue'));
-Vue.component('formcolor-componente',require('./components/Colorescomponent.vue'));
 Vue.component('formusuario-componente',require('./components/usuarioscomponent.vue'));
 Vue.component('cliente',require('./components/Clientes.vue'));
 Vue.component('proveedor',require('./components/Proveedor.vue'));
